@@ -29,11 +29,11 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<CounterCubit, CounterState>(
-        listener: (context, state) {
+      body: BlocConsumer<CounterCubit, CounterState>(
+      listener: (context, state) {
         if(state.up == true){
          Scaffold.of(context).showSnackBar(
-           SnackBar(content: Text('added 1'),)
+           SnackBar(content: Text('added 1',),duration: Duration(microseconds: 200),)
          );
         } else if (state.up == false){
          Scaffold.of(context).showSnackBar(
@@ -41,14 +41,13 @@ class _HomeState extends State<Home> {
          );
         }
       },
-        child: Row(
+      builder: (context, state) {
+          return Row(
           children: [
-            BlocBuilder<CounterCubit, CounterState>(
-              builder: (context, state) {
-                return Text('${state.counterVal}');
-              },
-            ),
-            FloatingActionButton(
+           Card(
+             child: Text('${state.counterVal}'),
+           ),
+           FloatingActionButton(
               onPressed: () {
                 context.bloc<CounterCubit>().inc();
               },
@@ -61,7 +60,8 @@ class _HomeState extends State<Home> {
               child: Icon(Icons.remove),
             ),
           ],
-        ),
+        );
+     },
       ),
     );
   }
