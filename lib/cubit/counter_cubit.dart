@@ -7,8 +7,8 @@ class CounterCubit extends Cubit<CounterState> {
   CounterCubit() : super(CounterState(counterVal: 0));
 
 
-  void inc() => emit(CounterState(counterVal: state.counterVal+1));
+  void inc() => emit(CounterState(counterVal: state.counterVal+1,up: true));
 
-  void dec() => emit(CounterState(counterVal: state.counterVal-1));
+  void dec() => emit(CounterState(counterVal: state.counterVal-1,up:false));
 
 }

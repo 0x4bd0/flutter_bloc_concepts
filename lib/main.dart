@@ -28,27 +28,40 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        children: [
-          BlocBuilder<CounterCubit, CounterState>(
-            builder: (context, state) {
-              return Text('${state.counterVal}');
-            },
-          ),
-          FloatingActionButton(
-            onPressed: () {
-              context.bloc<CounterCubit>().inc();
-            },
-            child: Icon(Icons.add),
-          ),
-          FloatingActionButton(
-            onPressed: () {
-              context.bloc<CounterCubit>().dec();
-            },
-            child: Icon(Icons.remove),
-          )
-        ],
+    return Scaffold(
+      body: BlocListener<CounterCubit, CounterState>(
+        listener: (context, state) {
+        if(state.up == true){
+         Scaffold.of(context).showSnackBar(
+           SnackBar(content: Text('added 1'),)
+         );
+        } else if (state.up == false){
+         Scaffold.of(context).showSnackBar(
+           SnackBar(content: Text('removed 1'),)
+         );
+        }
+      },
+        child: Row(
+          children: [
+            BlocBuilder<CounterCubit, CounterState>(
+              builder: (context, state) {
+                return Text('${state.counterVal}');
+              },
+            ),
+            FloatingActionButton(
+              onPressed: () {
+                context.bloc<CounterCubit>().inc();
+              },
+              child: Icon(Icons.add),
+            ),
+            FloatingActionButton(
+              onPressed: () {
+                context.bloc<CounterCubit>().dec();
+              },
+              child: Icon(Icons.remove),
+            ),
+          ],
+        ),
       ),
     );
   }
