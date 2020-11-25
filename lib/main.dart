@@ -14,12 +14,11 @@ class MyApp extends StatelessWidget {
       create: (context) => CounterCubit(),
       child: MaterialApp(
         title: 'Bloc provider',
-        home : Home(),
+        home: Home(),
       ),
     );
   }
 }
-
 
 class Home extends StatefulWidget {
   @override
@@ -32,24 +31,25 @@ class _HomeState extends State<Home> {
     return Container(
       child: Row(
         children: [
-          Text('Test'),
+          BlocBuilder<CounterCubit, CounterState>(
+            builder: (context, state) {
+              return Text('${state.counterVal}');
+            },
+          ),
           FloatingActionButton(
-            onPressed: (){
+            onPressed: () {
               context.bloc<CounterCubit>().inc();
-            }
-          ,
-          child : Icon(Icons.add),
-          ),          
+            },
+            child: Icon(Icons.add),
+          ),
           FloatingActionButton(
-            onPressed: (){
+            onPressed: () {
               context.bloc<CounterCubit>().dec();
-            }
-          ,
-          child : Icon(Icons.remove),
+            },
+            child: Icon(Icons.remove),
           )
         ],
       ),
-      
     );
   }
 }
